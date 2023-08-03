@@ -1,6 +1,6 @@
 # Transcribe audio to text on Cloudflare Workers with AssemblyAI, Node.js, and TypeScript
 
-This repository is the source code for following the guide to [Transcribe audio to text on Cloudflare Workers with AssemblyAI, Node.js, and TypeScript](https://www.assemblyai.com/blog).
+This repository is the source code for following the guide to [Transcribe audio to text on Cloudflare Workers with AssemblyAI, Node.js, and TypeScript]([https://www.assemblyai.com/blog](https://www.assemblyai.com/blog/transcribe-audio-cloudflare-workers-assemblyai-nodejs-typescript/)).
 
 You can deploy the project to Cloudflare Workers with the button below.
 
