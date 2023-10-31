@@ -1,5 +1,5 @@
 import { IRequest, Router, json, html, error, text } from 'itty-router';
-import { AssemblyAiClient } from './assemblyai';
+import { AssemblyAI } from 'assemblyai';
 
 const router = Router();
 
@@ -19,23 +19,26 @@ router.get('/', () => html(`<!DOCTYPE html>
     const formData = await request.formData();
     const file = formData.get('file') as unknown as File;
 
-    const client = new AssemblyAiClient(env.ASSEMBLYAI_API_KEY);
-    const uploadUrl = await client.uploadFile(file);
-    let transcript = await client.createTranscript({ audio_url: uploadUrl });
+    const client = new AssemblyAI({ apiKey: env.ASSEMBLYAI_API_KEY });
+    const uploadUrl = await client.files.upload(file.stream());
+    let transcript = await client.transcripts.create(
+      { audio_url: uploadUrl },
+      { poll: false }
+    );
 
     const newUrl = new URL(`/transcript/${transcript.id}`, request.url);
     return Response.redirect(newUrl.toString(), 303);
   })
   .get('/transcript/:id', async (request: IRequest, env: Env) => {
     const id = request.params.id;
-    const client = new AssemblyAiClient(env.ASSEMBLYAI_API_KEY);
-    const transcript = await client.getTranscript(id);
+    const client = new AssemblyAI({ apiKey: env.ASSEMBLYAI_API_KEY });
+    const transcript = await client.transcripts.get(id);
     if (transcript.status === 'completed') {
       return text(transcript.text);
     } else {
       return text(transcript.status, {
         headers: {
-          'Refresh': '3' // refreshes the browser every 3 seconds
+          'Refresh': '1' // refreshes the browser every second
         }
       });
     }
