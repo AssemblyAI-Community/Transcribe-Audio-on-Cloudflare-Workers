@@ -9,10 +9,10 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20231016.0",
     "typescript": "^5.2.2",
-    "wrangler": "^3.14.0"
+    "wrangler": "^3.17.1"
   },
   "dependencies": {
-    "assemblyai": "^3.0.1",
+    "assemblyai": "^4.0.0",
     "itty-router": "^4.0.23"
   }
 }

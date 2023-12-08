@@ -20,10 +20,8 @@ router.get('/', () => html(`<!DOCTYPE html>
     const file = formData.get('file') as unknown as File;
 
     const client = new AssemblyAI({ apiKey: env.ASSEMBLYAI_API_KEY });
-    const uploadUrl = await client.files.upload(file.stream());
-    let transcript = await client.transcripts.create(
-      { audio_url: uploadUrl },
-      { poll: false }
+    let transcript = await client.transcripts.submit(
+      { audio: file.stream() }
     );
 
     const newUrl = new URL(`/transcript/${transcript.id}`, request.url);
